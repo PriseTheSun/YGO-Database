@@ -1,5 +1,5 @@
 <template>
-  <v-footer class="footer-section" padless id="about">
+  <v-footer class="footer-section" padless>
     <v-container>
       <v-row class="py-8">
         <v-col cols="12" md="4" class="text-center text-md-left">
@@ -18,11 +18,11 @@
         <v-col cols="12" md="4" class="text-center">
           <h4 class="text-h6 mb-4 font-weight-bold">Links Rápidos</h4>
           <div class="footer-links">
-            <v-btn text small href="#cards">
+            <v-btn text small @click="$emit('open-filters')">
               <v-icon left small>mdi-cards</v-icon>
               Cards
             </v-btn>
-            <v-btn text small href="#about">
+            <v-btn text small @click="$emit('open-about')">
               <v-icon left small>mdi-information</v-icon>
               Sobre
             </v-btn>
@@ -33,14 +33,20 @@
           <h4 class="text-h6 mb-4 font-weight-bold">Conecte-se</h4>
           <div class="social-icons">
             <v-btn
-              v-for="icon in socialIcons"
-              :key="icon.name"
-              :href="icon.url"
+              href="https://github.com/PriseTheSun/YGO-Database"
               target="_blank"
               icon
               class="mx-2"
             >
-              <v-icon>{{ icon.icon }}</v-icon>
+              <v-icon>mdi-github</v-icon>
+            </v-btn>
+            <v-btn
+              href="https://www.linkedin.com/in/deverikaraujo"
+              target="_blank"
+              icon
+              class="mx-2"
+            >
+              <v-icon>mdi-linkedin</v-icon>
             </v-btn>
           </div>
         </v-col>
@@ -66,17 +72,7 @@
 </template>
 
 <script>
-export default {
-  data() {
-    return {
-      socialIcons: [
-        { name: 'GitHub', icon: 'mdi-github', url: '#' },
-        { name: 'Discord', icon: 'mdi-discord', url: '#' },
-        { name: 'Twitter', icon: 'mdi-twitter', url: '#' },
-      ],
-    };
-  },
-};
+export default {};
 </script>
 
 <style scoped>
