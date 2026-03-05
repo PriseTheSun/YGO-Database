@@ -227,18 +227,19 @@
             </v-col>
           </v-row>
         </v-card-text>
-        <v-card-actions>
-          <v-btn text color="error" @click="clearFilters">
+        <v-card-actions class="filter-actions">
+          <v-btn :icon="isMobile" text color="error" @click="clearFilters">
             <v-icon left>mdi-delete</v-icon>
-            Limpar Tudo
+            <span v-if="!isMobile">Limpar Tudo</span>
           </v-btn>
           <v-spacer></v-spacer>
-          <v-btn text @click="filterDialog = false">
-            Cancelar
+          <v-btn :icon="isMobile" text @click="filterDialog = false">
+            <v-icon left>mdi-close</v-icon>
+            <span v-if="!isMobile">Cancelar</span>
           </v-btn>
-          <v-btn color="secondary" dark @click="applyFilters">
+          <v-btn :icon="isMobile" color="secondary" dark @click="applyFilters">
             <v-icon left>mdi-check</v-icon>
-            Aplicar Filtros
+            <span v-if="!isMobile">Aplicar Filtros</span>
           </v-btn>
         </v-card-actions>
       </v-card>
@@ -258,6 +259,7 @@ export default {
       this.filterCards();
     },
   },
+
   data() {
     return {
       originalCards: [],
@@ -319,6 +321,9 @@ export default {
     CardImage,
   },
   computed: {
+    isMobile() {
+      return this.$vuetify.breakpoint.smAndDown;
+    },
     totalPages() {
       return Math.ceil(this.cardsSearched.length / this.perPage);
     },
@@ -438,6 +443,16 @@ export default {
 </script>
 
 <style scoped>
+
+.filter-actions {
+  flex-wrap: wrap;
+}
+@media (max-width: 600px) {
+  .filter-actions .v-btn {
+    min-width: 0 !important;
+    padding: 0 8px;
+  }
+}
 .grid-section {
   background: #f5f5f5;
   min-height: 100vh;

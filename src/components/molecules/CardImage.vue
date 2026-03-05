@@ -1,14 +1,9 @@
 <template>
   <div class="ygo-card" @click="openDetailDialog">
     <div class="image-container">
-      <v-img
-        :src="card.card_images[0].image_url"
-        height="350"
-        contain
-        class="card-image"
-      ></v-img>
+      <v-img :src="card.card_images[0].image_url" height="350" contain class="card-image"></v-img>
     </div>
-    
+
     <div class="card-info">
       <div class="card-name">{{ card.name }}</div>
       <div class="card-type">{{ formatType(card.type) }}</div>
@@ -27,26 +22,22 @@
             <v-icon>mdi-close</v-icon>
           </v-btn>
         </v-card-title>
-        
+
         <v-card-text class="pa-0">
           <v-row no-gutters>
             <v-col cols="12" md="5" class="pa-4 d-flex align-center justify-center bg-grey-lighten-4">
-              <v-img
-                :src="selectedCard.card_images[0].image_url"
-                max-width="280"
-                contain
-              ></v-img>
+              <v-img :src="selectedCard.card_images[0].image_url" max-width="280" contain></v-img>
             </v-col>
             <v-col cols="12" md="7" class="pa-4">
               <v-chip small class="mb-3" color="primary" dark>
                 {{ selectedCard.type }}
               </v-chip>
-              
+
               <div v-if="selectedCard.archetype" class="mb-3">
                 <span class="text-caption grey--text">Arquétipo:</span>
                 <v-chip x-small outlined class="ml-1">{{ selectedCard.archetype }}</v-chip>
               </div>
-              
+
               <div v-if="selectedCard.atk !== undefined" class="d-flex gap-4 mb-3">
                 <div class="stat-box">
                   <v-icon small color="red-darken-2">mdi-sword</v-icon>
@@ -71,39 +62,25 @@
                 </h5>
                 <p class="text-body-2 card-desc">{{ selectedCard.desc }}</p>
               </div>
-
-              <v-divider class="my-3"></v-divider>
-
-              <div class="description-section">
-                <h5 class="text-subtitle-2 font-weight-bold mb-2 secondary--text">
-                  <v-icon small class="mr-1">mdi-translate</v-icon>
-                  English (EN)
-                </h5>
-                <div v-if="englishDesc" class="text-body-2 card-desc">
-                  {{ englishDesc }}
-                </div>
-                <v-progress-circular
-                  v-else-if="loadingEnglish"
-                  indeterminate
-                  color="secondary"
-                  size="20"
-                ></v-progress-circular>
-                <p v-else class="grey--text text-caption">Clique para carregar tradução</p>
-              </div>
             </v-col>
           </v-row>
         </v-card-text>
 
-        <v-card-actions>
-          <v-btn color="secondary" variant="text" @click="loadEnglishTranslation">
-            <v-icon left>mdi-translate</v-icon>
-            Traduzir
-          </v-btn>
-          <v-spacer></v-spacer>
-          <v-btn color="primary" variant="text" @click="viewCard">
+        <v-card-actions class="action-buttons">
+          <v-btn v-if="!isMobile" :icon="isMobile" color="primary" variant="text" @click="viewCard">
             <v-icon left>mdi-open-in-new</v-icon>
-            Ver Imagem Grande
+            <span v-if="!isMobile">Ver Imagem Grande</span>
           </v-btn>
+
+          <v-spacer v-if="!isMobile"></v-spacer>
+
+          <div class="buttons-group" v-if="isMobile">
+            <v-btn :icon="isMobile" color="primary" variant="text" @click="viewCard" class="mobile-btn">
+              <v-icon>mdi-open-in-new</v-icon>
+            </v-btn>
+            <share-button :card="selectedCard" />
+          </div>
+          <share-button v-if="!isMobile" :card="selectedCard" />
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -111,24 +88,22 @@
 </template>
 
 <script>
+import ShareButton from '@/components/atom/ShereButton.vue';
+
 export default {
+  components: { ShareButton },
   data: () => ({
     detailDialog: false,
     selectedCard: null,
-    englishDesc: null,
-    loadingEnglish: false,
   }),
+  computed: {
+    // Vuetify exposes breakpoint helper
+    isMobile() {
+      return this.$vuetify.breakpoint.smAndDown;
+    }
+  },
   props: {
     card: Object
-  },
-  watch: {
-    detailDialog(val) {
-      if (val) {
-        this.selectedCard = this.card;
-        this.englishDesc = null;
-        this.loadingEnglish = false;
-      }
-    }
   },
   methods: {
     formatType(type) {
@@ -144,27 +119,13 @@ export default {
     viewCard() {
       window.open(this.card.card_images[0].image_url, '_blank');
     },
-    async loadEnglishTranslation() {
-      if (this.englishDesc) return;
-      
-      this.loadingEnglish = true;
-      try {
-        const cardName = encodeURIComponent(this.card.name);
-        const response = await fetch(`https://db.ygoprodeck.com/api/v7/cardinfo.php?cardname=${cardName}&language=en`);
-        const data = await response.json();
-        
-        if (data.data && data.data[0] && data.data[0].desc) {
-          this.englishDesc = data.data[0].desc;
-        } else {
-          this.englishDesc = 'Tradução não disponível';
-        }
-      } catch (error) {
-        console.error('Error fetching English translation:', error);
-        this.englishDesc = 'Erro ao carregar tradução';
-      } finally {
-        this.loadingEnglish = false;
+  },
+  watch: {
+    detailDialog(val) {
+      if (val) {
+        this.selectedCard = this.card;
       }
-    },
+    }
   }
 }
 </script>
@@ -184,6 +145,36 @@ export default {
   border-radius: 8px;
   overflow: hidden;
   width: 100%;
+}
+
+.action-buttons {
+  flex-wrap: wrap;
+  /* allow buttons to wrap on small screens */
+}
+
+.buttons-group {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-left: auto;
+}
+
+.mobile-btn {
+  min-width: 0 !important;
+  padding: 0 8px;
+}
+
+/* reduce padding on mobile when icon-only */
+@media (max-width: 600px) {
+  .action-buttons {
+    justify-content: flex-end;
+    padding-top: 12px;
+  }
+
+  .action-buttons .v-btn {
+    min-width: 0 !important;
+    padding: 0 8px;
+  }
 }
 
 .card-info {
@@ -213,7 +204,8 @@ export default {
   margin-top: 8px;
 }
 
-.card-stats .atk, .card-stats .def {
+.card-stats .atk,
+.card-stats .def {
   display: inline-flex;
   align-items: center;
   padding: 4px 12px;
