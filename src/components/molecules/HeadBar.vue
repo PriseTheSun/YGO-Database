@@ -10,9 +10,9 @@
     <v-container class="pa-0" fluid>
       <v-row justify="center" no-gutters class="fill-height">
         <v-col cols="12" md="10" lg="8" class="d-flex align-center px-4">
-          <v-app-bar-nav-icon>
-            <v-icon large>mdi-cards-outline</v-icon>
-          </v-app-bar-nav-icon>
+          <v-app-bar-nav-icon class="d-md-none white--text" @click="$emit('toggle-drawer')"></v-app-bar-nav-icon>
+
+          <v-icon large class="ml-2" color="white">mdi-cards-outline</v-icon>
 
           <v-toolbar-title class="font-weight-bold ml-2">
             <span class="accent--text">YGO</span>
@@ -38,7 +38,7 @@
             </v-btn>
           </div>
 
-          <SearchIconApp :search="search" class="ml-4" />
+          <SearchIconApp :search="search" class="ml-4 d-none d-md-flex" />
         </v-col>
       </v-row>
     </v-container>

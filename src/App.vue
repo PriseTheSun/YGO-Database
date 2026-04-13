@@ -1,6 +1,54 @@
 <template>
   <v-app>
-    <HeadBar :search=tmp @open-filters="openFilters" @open-about="aboutDialog = true" />
+    <v-navigation-drawer v-model="drawer" fixed temporary>
+      <v-list-item class="px-2 py-4">
+        <v-list-item-avatar rounded>
+          <v-icon large color="primary">mdi-cards-outline</v-icon>
+        </v-list-item-avatar>
+        <v-list-item-content>
+          <v-list-item-title class="text-h6 font-weight-bold primary--text">YGO Database</v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
+
+      <v-divider></v-divider>
+
+      <div class="px-4 py-2 mt-2">
+        <SearchIconApp :search="tmp" />
+      </div>
+
+      <v-list dense nav class="mt-2">
+        <v-list-item @click="openFilters(); drawer = false">
+          <v-list-item-icon>
+            <v-icon color="secondary">mdi-cards</v-icon>
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title class="text-subtitle-1">Cards</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+
+        <v-list-item @click="aboutDialog = true; drawer = false">
+          <v-list-item-icon>
+            <v-icon color="secondary">mdi-information-outline</v-icon>
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title class="text-subtitle-1">Sobre</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+      
+      <v-divider class="mt-4"></v-divider>
+      
+      <div class="pa-4 d-flex justify-center gap-4">
+        <v-btn icon href="https://github.com/PriseTheSun/YGO-Database" target="_blank" color="primary">
+          <v-icon>mdi-github</v-icon>
+        </v-btn>
+        <v-btn icon href="https://www.linkedin.com/in/deverikaraujo" target="_blank" color="info">
+          <v-icon>mdi-linkedin</v-icon>
+        </v-btn>
+      </div>
+    </v-navigation-drawer>
+
+    <HeadBar :search=tmp @open-filters="openFilters" @open-about="aboutDialog = true" @toggle-drawer="drawer = !drawer" />
     <ParalaxHero @open-about="aboutDialog = true" />
     <GridSystem :search=mySearch ref="gridSystem" />
     <SetFoot @open-filters="openFilters" @open-about="aboutDialog = true"/>
@@ -129,6 +177,7 @@ import HeadBar from "@/components/molecules/HeadBar";
 import ParalaxHero from "@/components/molecules/ParalaxHero";
 import GridSystem from "@/components/molecules/GridSystem";
 import SetFoot from  '@/components/molecules/SetFoot.vue'
+import SearchIconApp from '@/components/atom/SearchIconApp'
 
 export default {
   name: "App",
@@ -137,10 +186,12 @@ export default {
     HeadBar,
     ParalaxHero,
     GridSystem,
-    SetFoot
+    SetFoot,
+    SearchIconApp
   },
   data(){
     return {
+      drawer: false,
       mySearch: null,
       aboutDialog: false,
     };
