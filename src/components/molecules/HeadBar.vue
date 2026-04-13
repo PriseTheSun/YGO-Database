@@ -1,11 +1,11 @@
 <template>
   <v-app-bar
+    app
     flat
     color="primary"
     dark
     height="70"
     class="elevation-4"
-    style="position: sticky; top: 0; z-index: 10;"
   >
     <v-container class="d-flex align-center pa-0" fluid>
       <v-app-bar-nav-icon>
