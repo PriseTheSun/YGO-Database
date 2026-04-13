@@ -6,7 +6,7 @@
           <div class="section-header text-center mb-6">
             <h2 class="text-h3 font-weight-bold mb-2">
               <v-icon large color="secondary" class="mr-2">mdi-cards</v-icon>
-              Cards Collection
+              Coleção de Cartas
             </h2>
             <p class="text-body-1 grey--text">
               Explore nosso banco de dados com mais de {{ total }} cartas
@@ -430,6 +430,7 @@ export default {
       .then((res) => {
         this.originalCards = res.data;
         this.cardsSearched = res.data;
+        this.total = res.data.length;
         this.extractArchetypes();
         this.listPagination();
         this.loading = false;

@@ -40,7 +40,7 @@
               outlined
               dark
               class="mb-2"
-              href="#about"
+              @click="$emit('open-about')"
             >
               <v-icon left>mdi-information</v-icon>
               Sobre o Projeto

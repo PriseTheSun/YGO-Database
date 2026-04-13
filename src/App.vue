@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <HeadBar :search=tmp @open-filters="openFilters" @open-about="aboutDialog = true" />
-    <ParalaxHero />
+    <ParalaxHero @open-about="aboutDialog = true" />
     <GridSystem :search=mySearch ref="gridSystem" />
     <SetFoot @open-filters="openFilters" @open-about="aboutDialog = true"/>
 
