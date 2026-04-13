@@ -1,9 +1,15 @@
 <template>
-  <v-app>
-    <HeadBar :search=tmp @open-filters="openFilters" @open-about="aboutDialog = true" />
-    <ParalaxHero @open-about="aboutDialog = true" />
-    <GridSystem :search=mySearch ref="gridSystem" />
-    <SetFoot @open-filters="openFilters" @open-about="aboutDialog = true"/>
+  <v-app style="background: #e0e0e0;">
+    <v-main>
+      <v-row justify="center" no-gutters>
+        <v-col cols="12" md="6" class="white elevation-12" style="min-height: 100vh;">
+          <HeadBar :search=tmp @open-filters="openFilters" @open-about="aboutDialog = true" />
+          <ParalaxHero @open-about="aboutDialog = true" />
+          <GridSystem :search=mySearch ref="gridSystem" />
+          <SetFoot @open-filters="openFilters" @open-about="aboutDialog = true"/>
+        </v-col>
+      </v-row>
+    </v-main>
 
     <v-dialog v-model="aboutDialog" max-width="700">
       <v-card>
