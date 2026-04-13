@@ -1,8 +1,10 @@
 <template>
   <v-footer class="footer-section" padless>
-    <v-container>
-      <v-row class="py-8">
-        <v-col cols="12" md="4" class="text-center text-md-left">
+    <v-container fluid class="pa-0">
+      <v-row justify="center" no-gutters>
+        <v-col cols="12" md="10" lg="8" class="px-4">
+          <v-row class="py-8">
+            <v-col cols="12" md="4" class="text-center text-md-left">
           <div class="footer-brand mb-4">
             <v-icon large color="secondary" class="mr-2">mdi-cards-outline</v-icon>
             <span class="text-h5 font-weight-bold">
@@ -65,6 +67,8 @@
           <p class="grey--text text--disabled text-caption mt-1">
             Dados fornecidos por <a href="https://ygoprodeck.com" target="_blank" class="secondary--text">YGOPRODECK</a>
           </p>
+            </v-col>
+          </v-row>
         </v-col>
       </v-row>
     </v-container>

@@ -1,8 +1,7 @@
 <template>
-  <v-parallax
-    height="700"
-    src="https://images5.alphacoders.com/967/thumb-1920-967270.png"
+  <section
     class="hero-section"
+    style="background-image: url('https://images5.alphacoders.com/967/thumb-1920-967270.png');"
   >
     <div class="hero-overlay"></div>
     <v-container class="position-relative fill-height">
@@ -49,7 +48,7 @@
         </v-col>
       </v-row>
     </v-container>
-  </v-parallax>
+  </section>
 </template>
 
 <script>
@@ -61,6 +60,10 @@ export default {
 .hero-section {
   position: relative;
   overflow: hidden;
+  height: 100dvh !important;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .hero-overlay {

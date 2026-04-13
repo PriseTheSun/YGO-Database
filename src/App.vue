@@ -162,3 +162,27 @@ export default {
   gap: 8px;
 }
 </style>
+
+<style>
+/* Custom Scrollbar Orange */
+::-webkit-scrollbar {
+  width: 12px;
+}
+::-webkit-scrollbar-track {
+  background: #f5f5f5;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #FF6F00;
+  border-radius: 6px;
+  border: 3px solid #f5f5f5;
+}
+::-webkit-scrollbar-thumb:hover {
+  background-color: #e66400;
+}
+
+/* Firefox support */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #FF6F00 #f5f5f5;
+}
+</style>

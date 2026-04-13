@@ -1,8 +1,9 @@
 <template>
-  <v-container fluid class="grid-section" id="cards">
-    <v-container>
-      <v-row class="mb-6">
-        <v-col cols="12">
+  <v-container fluid class="grid-section pa-0" id="cards">
+    <v-row justify="center" no-gutters>
+      <v-col cols="12" md="10" lg="8" class="px-4 py-8">
+        <v-row class="mb-6">
+          <v-col cols="12">
           <div class="section-header text-center mb-6">
             <h2 class="text-h3 font-weight-bold mb-2">
               <v-icon large color="secondary" class="mr-2">mdi-cards</v-icon>
@@ -130,7 +131,8 @@
           </p>
         </div>
       </template>
-    </v-container>
+      </v-col>
+    </v-row>
 
     <v-dialog v-model="filterDialog" max-width="700">
       <v-card>
